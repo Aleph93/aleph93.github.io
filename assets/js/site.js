@@ -9,15 +9,10 @@
 (function () {
   'use strict';
 
-  /* ---------- "Save CV as PDF" ---------- */
-
-  document.addEventListener('click', function (e) {
-    var trigger = e.target.closest('[data-print]');
-    if (trigger) {
-      e.preventDefault();
-      window.print();
-    }
-  });
+  /* The header CV button is a plain download link to assets/*.pdf, so it
+     needs no JS. (It used to call window.print(); to bring that back, give
+     an element [data-print] and re-add a click handler here.) The @media
+     print block in site.css still applies to Ctrl+P on any page. */
 
   /* ---------- lightbox ---------- */
 
