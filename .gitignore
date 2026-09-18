@@ -1,0 +1,14 @@
+# Raw source content — local only. Screenshots here are 67 MB of originals;
+# tools/build-images.ps1 turns them into the web assets under assets/img/.
+project content raw/
+
+# Per-machine Claude Code permissions, not shared config
+.claude/settings.local.json
+
+# Output of tools/check-ats.ps1 -Dump
+*.extracted.txt
+
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini

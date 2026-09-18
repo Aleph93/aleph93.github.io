@@ -1,0 +1,416 @@
+/* ============================================================
+   Alexandru Romanciuc - portfolio
+   Dark-only by design. There is deliberately no prefers-color-scheme
+   branch: one committed palette, tuned once.
+   ============================================================ */
+
+:root {
+  --bg:       #16181a;
+  --surface:  #1e2124;
+  --surface-2:#24282c;
+  --line:     #2b2f33;
+  --text:     #d8d6d2;
+  --muted:    #9aa0a6;   /* 6.7:1 on --bg, 6.1:1 on --surface */
+  --accent:   #8ab4d8;   /* 8.1:1 on --bg, 7.4:1 on --surface */
+  --accent-dim:#5b7f9e;
+
+  --measure: 68ch;
+  --page:    1180px;
+  --radius:  4px;
+
+  --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
+  --step-0:  clamp(0.95rem, 0.92rem + 0.15vw, 1.03rem);
+  --step-1:  clamp(1.12rem, 1.05rem + 0.35vw, 1.3rem);
+  --step-2:  clamp(1.4rem,  1.25rem + 0.7vw,  1.85rem);
+  --step-3:  clamp(1.9rem,  1.55rem + 1.6vw,  3rem);
+
+  --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+          "Liberation Mono", monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 5.5rem; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: var(--step-0);
+  line-height: 1.68;
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
+}
+
+h1, h2, h3, h4 { line-height: 1.2; font-weight: 600; margin: 0; }
+h1 { font-size: var(--step-3); letter-spacing: -0.02em; }
+h2 { font-size: var(--step-2); letter-spacing: -0.01em; }
+h3 { font-size: var(--step-1); }
+p  { margin: 0 0 1.05em; max-width: var(--measure); }
+p:last-child { margin-bottom: 0; }
+
+a { color: var(--accent); text-decoration-color: var(--accent-dim);
+    text-underline-offset: 3px; }
+a:hover { color: #a9cbe8; text-decoration-color: currentColor; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* height:auto matters. Thumbnails carry width/height attributes so the
+   browser can reserve space before they load, but those attributes are
+   presentational hints that make the used height definite - which makes the
+   browser ignore `aspect-ratio` and render every thumbnail at its full
+   pixel height. Letting height resolve to auto hands sizing back to CSS. */
+img { max-width: 100%; height: auto; display: block; }
+
+.wrap { width: 100%; max-width: var(--page); margin-inline: auto;
+        padding-inline: clamp(1.1rem, 4vw, 2.5rem); }
+
+.skip {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  background: var(--accent); color: #0d0f10; padding: 0.6rem 1rem;
+  font-weight: 600;
+}
+.skip:focus { left: 0.5rem; top: 0.5rem; }
+
+/* ---------- header ---------- */
+
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(22, 24, 26, 0.88);
+  border-bottom: 1px solid var(--line);
+}
+@supports (backdrop-filter: blur(10px)) {
+  .site-header { backdrop-filter: blur(10px); }
+}
+.site-header > .wrap {
+  display: flex; align-items: center; gap: 1.25rem;
+  min-height: 3.75rem;
+}
+.wordmark {
+  font-weight: 600; letter-spacing: -0.01em; color: var(--text);
+  text-decoration: none; margin-right: auto; white-space: nowrap;
+}
+.wordmark:hover { color: var(--text); }
+
+.nav { display: flex; align-items: center; gap: 0.35rem; }
+.nav a {
+  color: var(--muted); text-decoration: none; font-size: var(--step--1);
+  padding: 0.45rem 0.7rem; border-radius: var(--radius);
+  letter-spacing: 0.02em;
+}
+.nav a:hover { color: var(--text); background: var(--surface-2); }
+.nav a[aria-current="page"] { color: var(--text); }
+
+.btn {
+  display: inline-block; font: inherit; font-size: var(--step--1);
+  cursor: pointer; white-space: nowrap;
+  padding: 0.5rem 0.95rem; border-radius: var(--radius);
+  border: 1px solid var(--line); background: var(--surface-2);
+  color: var(--text); text-decoration: none;
+}
+.btn:hover { border-color: var(--accent-dim); color: var(--text); background: #2a2f34; }
+.btn-primary { border-color: var(--accent-dim); }
+
+/* ---------- sections ---------- */
+
+main > section { padding-block: clamp(2.75rem, 7vw, 5rem); }
+main > section + section { border-top: 1px solid var(--line); }
+
+.section-label {
+  font-size: var(--step--1); text-transform: uppercase;
+  letter-spacing: 0.14em; color: var(--muted); font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+.lede { font-size: var(--step-1); color: var(--text); }
+
+/* ---------- hero ---------- */
+
+.hero { padding-block: clamp(3.5rem, 10vw, 6.5rem) clamp(2.5rem, 6vw, 4rem); }
+.hero .role {
+  font-size: var(--step-1); color: var(--accent);
+  margin: 0.6rem 0 1.75rem; font-weight: 500;
+}
+.hero-bio p { color: var(--text); }
+.hero-bio p + p { margin-top: 1.05em; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 2rem; }
+
+/* ---------- skills ---------- */
+
+.skill-groups {
+  display: grid; gap: 1.75rem 2.5rem; align-items: start;
+  grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr));
+}
+.skill-groups h3 {
+  font-size: var(--step--1); text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.7rem;
+}
+.tags { list-style: none; margin: 0; padding: 0;
+        display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tags li {
+  font-size: var(--step--1); padding: 0.25rem 0.6rem;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 999px; color: var(--text);
+}
+
+/* ---------- experience ---------- */
+
+.roles { display: grid; gap: 2.25rem; }
+.role-item {
+  display: grid; gap: 0.35rem 2.5rem;
+  grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
+}
+.role-item .when {
+  font-size: var(--step--1); color: var(--muted); font-variant-numeric: tabular-nums;
+  padding-top: 0.3rem;
+}
+.role-item h3 { font-size: var(--step-1); }
+.role-item .where { color: var(--accent); font-weight: 500; }
+.role-item ul { margin: 0.7rem 0 0; padding-left: 1.1rem; }
+.role-item li { margin-bottom: 0.5rem; max-width: var(--measure); }
+.role-item li::marker { color: var(--accent-dim); }
+
+.facts { display: grid; gap: 1.25rem 2.5rem;
+         grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); margin: 0; }
+.facts dt {
+  font-size: var(--step--1); text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.3rem;
+}
+.facts dd { margin: 0; }
+
+/* ---------- teaser cards (home) ---------- */
+
+.cards { display: grid; gap: 1.25rem;
+         grid-template-columns: repeat(auto-fit, minmax(min(265px, 100%), 1fr)); }
+.card {
+  display: flex; flex-direction: column;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); overflow: hidden;
+  text-decoration: none; color: var(--text);
+}
+.card:hover { border-color: var(--accent-dim); color: var(--text); }
+.card img { aspect-ratio: 16 / 9; object-fit: cover; width: 100%; }
+.card-body { padding: 1.1rem 1.15rem 1.25rem; }
+.card h3 { margin-bottom: 0.3rem; }
+.card .meta { font-size: var(--step--1); color: var(--muted); }
+.card p { font-size: var(--step--1); margin: 0.6rem 0 0; color: var(--text); }
+
+.card-placeholder {
+  aspect-ratio: 16 / 9; display: grid; place-items: center;
+  background: linear-gradient(135deg, #22262a, #1a1d20);
+  color: var(--muted); font-size: var(--step--1); letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ---------- projects page ---------- */
+
+.tier { padding-block: clamp(2.5rem, 6vw, 4rem); }
+.tier + .tier { border-top: 1px solid var(--line); }
+.tier-head { margin-bottom: 2.25rem; }
+.tier-head h2 { font-size: var(--step-2); }
+.tier-head .note { color: var(--muted); font-size: var(--step--1); margin: 0.4rem 0 0; }
+
+.projects { display: grid; gap: 3.5rem; }
+
+/* Cap the whole article, not just the prose. Without this the metadata strip
+   and the video grid stretch the full 1100px while the paragraphs stop at
+   their 68ch measure, which reads as a lopsided empty right-hand column. */
+.project { scroll-margin-top: 5.5rem; max-width: 56rem; }
+.project > * + * { margin-top: 1.25rem; }
+.project h3 { font-size: var(--step-2); }
+
+.project-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.75rem; }
+
+.tag-featured {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--accent);
+  border: 1px solid var(--accent-dim); border-radius: 999px;
+  padding: 0.15rem 0.6rem; white-space: nowrap;
+}
+
+/* Metadata strip. A <dl>, so Year/Role/Platforms stay machine-readable.
+   Flex rather than grid: equal grid columns force a long value (the Moonscars
+   platform list) into a narrow column where it wraps to four lines while the
+   short values leave their columns half empty. Flex lets each entry take the
+   width it needs and pushes the long ones onto their own row. */
+.project-meta {
+  display: flex; flex-wrap: wrap; gap: 0.85rem 2.25rem; margin: 0;
+  padding: 1rem 1.15rem;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.project-meta > div { flex: 0 1 auto; min-width: 7.5rem; max-width: 100%; }
+.project-meta dt {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--muted); margin-bottom: 0.15rem;
+}
+.project-meta dd { margin: 0; font-size: var(--step--1); }
+
+.project-body p { color: var(--text); }
+
+.links { list-style: none; margin: 0; padding: 0;
+         display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.links a {
+  display: inline-block; font-size: var(--step--1); text-decoration: none;
+  padding: 0.4rem 0.8rem; border-radius: var(--radius);
+  border: 1px solid var(--line); background: var(--surface);
+}
+.links a:hover { border-color: var(--accent-dim); background: var(--surface-2); }
+.links a::after { content: " \2197"; color: var(--muted); }
+
+/* Videos. Always-embedded by choice; loading="lazy" + a reserved 16:9 box
+   keep ~15 players from initialising at once or shifting layout. */
+.videos { display: grid; gap: 1rem;
+          grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); }
+.video figure { margin: 0; }
+.video .frame {
+  aspect-ratio: 16 / 9; background: #000;
+  border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+}
+.video iframe { width: 100%; height: 100%; border: 0; display: block; }
+.video figcaption {
+  font-size: var(--step--1); color: var(--muted); margin-top: 0.5rem;
+}
+
+/* Screenshots. Sources vary 1.59-2.12 in aspect; the fixed 16:9 box plus
+   object-fit: cover absorbs that without cropping the lightbox image. */
+.shots { list-style: none; margin: 0; padding: 0;
+         display: grid; gap: 0.6rem;
+         grid-template-columns: repeat(auto-fill, minmax(min(150px, 100%), 1fr)); }
+.shots a {
+  display: block; border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; background: #000; line-height: 0;
+}
+.shots a:hover { border-color: var(--accent-dim); }
+.shots img { aspect-ratio: 16 / 9; object-fit: cover; width: 100%; }
+
+/* --- tier 1: featured --- */
+.project-featured {
+  border-left: 3px solid var(--accent-dim);
+  padding-left: clamp(1rem, 3vw, 2rem);
+  max-width: 64rem;   /* wider than the rest - this is the centrepiece */
+}
+.project-featured h3 { font-size: var(--step-3); }
+.project-featured .shots { grid-template-columns: repeat(auto-fill, minmax(min(215px, 100%), 1fr)); }
+.project-featured .project-body p { font-size: 1.03em; }
+
+/* --- tier 3: early work, compact --- */
+.tier-early .projects { gap: 2.5rem; }
+.tier-early .project h3 { font-size: var(--step-1); }
+.tier-early .shots { grid-template-columns: repeat(auto-fill, minmax(min(118px, 100%), 1fr)); }
+.tier-early .project-meta { background: transparent; padding: 0.35rem 0; border: 0; }
+.tier-early .videos { grid-template-columns: minmax(0, 420px); }
+
+/* ---------- lightbox ---------- */
+
+.lightbox {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(10, 11, 12, 0.96);
+  display: grid; grid-template-rows: 1fr auto;
+  padding: clamp(0.75rem, 3vw, 2rem);
+}
+.lightbox[hidden] { display: none; }
+.lightbox-stage { display: grid; place-items: center; min-height: 0; }
+.lightbox-stage img {
+  max-width: 100%; max-height: 100%; object-fit: contain;
+  border-radius: var(--radius);
+}
+.lightbox-bar {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; padding-top: 1rem; color: var(--muted);
+  font-size: var(--step--1);
+}
+.lightbox-count { font-variant-numeric: tabular-nums; min-width: 4.5rem; text-align: center; }
+.lightbox button {
+  font: inherit; cursor: pointer; color: var(--text);
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 0.45rem 0.9rem;
+}
+.lightbox button:hover { border-color: var(--accent-dim); }
+.lightbox-close { position: absolute; top: clamp(0.75rem, 3vw, 2rem); right: clamp(0.75rem, 3vw, 2rem); }
+.lightbox-caption { max-width: var(--measure); text-align: center; }
+
+/* ---------- contact + footer ---------- */
+
+.contact-list { list-style: none; margin: 0; padding: 0; display: grid;
+                gap: 0.6rem; font-size: var(--step-1); }
+.site-footer {
+  border-top: 1px solid var(--line); padding-block: 2rem;
+  color: var(--muted); font-size: var(--step--1);
+}
+.site-footer .wrap { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem;
+                     justify-content: space-between; }
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 720px) {
+  .role-item { grid-template-columns: 1fr; gap: 0.15rem; }
+  .role-item .when { padding-top: 0; order: -1; }
+  .nav a { padding: 0.45rem 0.5rem; }
+  .site-header > .wrap { gap: 0.6rem; }
+  .wordmark { font-size: var(--step--1); }
+}
+
+/* The header wraps to a second line rather than using a hamburger: nothing
+   gets hidden behind JS, and the nav stays in the DOM for text extraction. */
+@media (max-width: 560px) {
+  .site-header > .wrap {
+    flex-wrap: wrap; row-gap: 0; padding-block: 0.5rem;
+  }
+  .wordmark { flex: 1 1 100%; margin-right: 0; padding-bottom: 0.35rem; }
+  .nav { margin-left: -0.5rem; margin-right: auto; }
+  .site-header .btn { padding: 0.4rem 0.7rem; }
+}
+
+@media (max-width: 520px) {
+  .shots, .tier-early .shots, .project-featured .shots {
+    grid-template-columns: repeat(auto-fill, minmax(min(120px, 100%), 1fr));
+  }
+  .videos { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- print: this is what makes "Save CV as PDF" usable ---------- */
+
+@media print {
+  :root { --text: #000; --muted: #444; --accent: #000; --line: #bbb; }
+
+  html { scroll-behavior: auto; }
+  body { background: #fff; color: #000; font-size: 10.5pt; line-height: 1.45; }
+
+  .site-header, .site-footer, .nav, .btn, .hero-actions,
+  .shots, .videos, .lightbox, .skip, .card img, .card-placeholder,
+  .teaser-section { display: none !important; }
+
+  main > section { padding-block: 0 1.2rem; border: 0 !important; }
+  .wrap { max-width: none; padding-inline: 0; }
+  p, li { max-width: none; }
+
+  h1 { font-size: 20pt; }
+  h2 { font-size: 13pt; margin-top: 1.1rem; }
+  h3 { font-size: 11.5pt; }
+
+  .role-item { grid-template-columns: 9rem 1fr; page-break-inside: avoid; }
+  .tags li { border: 1px solid #bbb; background: none; }
+  .facts, .skill-groups { gap: 0.5rem 1.5rem; }
+
+  /* A printed page has no hover state - spell the destinations out. The
+     mailto: link is skipped: its href just repeats the visible address. */
+  a { text-decoration: none; }
+  .contact-list a:not([href^="mailto"])::after {
+    content: " (" attr(href) ")"; font-size: 9pt; color: #444;
+  }
+}
